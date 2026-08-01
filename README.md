@@ -9,14 +9,6 @@ as a live web service on Render.
 ## Dataset Link
 [Heart Disease Prediction Dataset — Kaggle](https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset)
 
-> **Note on `heart.csv` in this repo:** The assignment's specified repository
-> structure explicitly includes `heart.csv` as a required file, so it is included
-> here. This is the standard, widely-mirrored 303-record UCI Heart Disease dataset
-> (age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca,
-> thal, target) — the same feature set as the Kaggle version linked above. If your
-> institution's redistribution policy requires it, spot-check this file against your
-> own Kaggle download before submitting, and remove it if your license terms require
-> that instead.
 
 ## Libraries Used
 - pandas, numpy
@@ -94,49 +86,10 @@ curl -X POST https://<your-render-app>.onrender.com/predict \
 ```
 
 ## Render Deployment URL
-**`<PASTE YOUR LIVE RENDER URL HERE AFTER DEPLOYING, e.g. https://heart-disease-api.onrender.com>`**
+**`https://assignment10-bwdi.onrender.com`**
 
-> This project's code has been fully built and tested locally (see confirmation
-> below), but actually deploying it to Render requires your own Render account and
-> a live push to GitHub — steps neither of which can be completed from this
-> environment. Follow the deployment steps below, then paste the resulting live URL
-> into this section before submitting.
 
-### How to deploy on Render (step-by-step)
-1. Push this entire folder to your public GitHub repository.
-2. Go to [render.com](https://render.com) and sign in (GitHub login works directly).
-3. Click **New +** → **Web Service**.
-4. Connect your GitHub account and select this repository.
-5. Configure the service:
-   - **Environment:** Python 3
-   - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `gunicorn app:app` (already specified in the included
-     `Procfile`, so Render should detect it automatically)
-6. Click **Create Web Service**. Render will install dependencies and start the app;
-   this takes a few minutes on the first deploy.
-7. Once live, Render gives you a public URL like
-   `https://your-service-name.onrender.com`. Test it with the curl command above
-   (swap in your URL) to confirm predictions work.
-8. Paste that URL into the **Render Deployment URL** section above and commit the
-   updated README.
 
-**Note on Render's free tier:** free web services on Render spin down after a period
-of inactivity and take ~30–60 seconds to "wake up" on the next request. If your
-instructor evaluates the API and gets a slow first response or a timeout, that's why
-— consider pinging the `/health` endpoint shortly before evaluation, or use a paid
-tier if consistent uptime is required.
-
-## Local Testing (already verified working)
-Before deployment, the API was run and tested locally in a sandboxed environment to
-confirm correctness:
-```bash
-python train_model.py    # produces model.pkl, prints Test Accuracy: 0.8033
-python app.py             # starts Flask dev server on port 5000
-curl http://localhost:5000/                    # returns API info + required fields
-curl -X POST http://localhost:5000/predict ...  # returns real predictions (see above)
-```
-All three cases (root endpoint, valid positive prediction, valid negative prediction,
-and a missing-field validation error) were tested and returned correct results.
 
 ## Conclusion
 This project trained a Logistic Regression model to predict heart disease risk from
